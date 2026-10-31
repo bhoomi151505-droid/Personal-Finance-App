@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Money Copilot | AI Financial Intelligence & Decision Platform</title>
+  
+  <!-- Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  
+  <!-- FontAwesome for reliable fintech icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  
+  <!-- Chart.js for enterprise financial visualizations -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <!-- Application Stylesheet -->
+  <link rel="stylesheet" href="/static/css/app.css" />
+</head>
+<body>
+  <div class="app-shell">
+    
+    <!-- Collapsible Responsive Sidebar with 13 Modules -->
+    <aside class="sidebar" id="sidebar">
+      <div>
+        <div class="brand">
+          <div class="brand-mark"><i class="fa-solid fa-chart-pie"></i></div>
+          <div class="brand-text">
+            <b>Money Copilot</b>
+            <small>INTELLIGENCE OS</small>
+          </div>
+        </div>
+
+        <div class="nav-label">Core Command</div>
+        <nav>
+          <button class="nav-item active" onclick="navigate('Overview')" id="nav-Overview">
+            <span class="nav-icon"><i class="fa-solid fa-table-columns"></i></span>
+            <span>Overview</span>
+          </button>
+          
+          <button class="nav-item" onclick="navigate('Transactions')" id="nav-Transactions">
+            <span class="nav-icon"><i class="fa-solid fa-arrow-right-arrow-left"></i></span>
+            <span>Transactions</span>
+          </button>
+
+          <button class="nav-item" onclick="navigate('Analytics')" id="nav-Analytics">
+            <span class="nav-icon"><i class="fa-solid fa-chart-line"></i></span>
+            <span>Analytics</span>
+          </button>
+
+          <button class="nav-item" onclick="navigate('AICoach')" id="nav-AICoach">
+            <span class="nav-icon"><i class="fa-solid fa-robot"></i></span>
+            <span>AI Money Coach</span>
+          </button>
+
+          <button class="nav-item" onclick="navigate('FinancialRules')" id="nav-FinancialRules">
+            <span class="nav-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></span>
+            <span>Financial Rules</span>
+          </button>
+
+          <button class="nav-item" onclick="navigate('AnomalyDetection')" id="nav-AnomalyDetection">
+            <span class="nav-icon"><i class="fa-solid fa-triangle-exclamation"></i></span>
+            <span>Anomaly Detection</span>
+            <span class="nav-badge" id="anomaly-badge" style="display:none;">0</span>
+          </button>
+
+          <button class="nav-item" onclick="navigate('Simulation')" id="nav-Simulation">
+            <span class="nav-icon"><i class="fa-solid fa-flask-vial"></i></span>
+            <span>Forecasting & Simulation</span>
+          </button>
+
+          <button class="nav-item" onclick="navigate('BudgetGoals')" id="nav-BudgetGoals">
+            <span class="nav-icon"><i class="fa-solid fa-bullseye"></i></span>
+            <span>Budget & Goals</span>
+          </button>
+
+          <button class="nav-item" onclick="navigate('InvestmentIntel')" id="nav-InvestmentIntel">
+            <span class="nav-icon"><i class="fa-solid fa-briefcase"></i></span>
+            <span>Investment Intelligence</span>
+          </button>
+
+          <button class="nav-item" onclick="navigate('TimeMachine')" id="nav-TimeMachine">
+            <span class="nav-icon"><i class="fa-solid fa-clock-rotate-left"></i></span>
+            <span>Financial History</span>
+          </button>
+
+          <button class="nav-item" onclick="navigate('RecommendationLab')" id="nav-RecommendationLab">
+            <span class="nav-icon"><i class="fa-solid fa-scale-balanced"></i></span>
+            <span>Recommendation Lab</span>
+          </button>
+
+          <button class="nav-item" onclick="navigate('SecurityAudit')" id="nav-SecurityAudit">
+            <span class="nav-icon"><i class="fa-solid fa-shield-halved"></i></span>
+            <span>Security & Audit</span>
+          </button>
+
+          <button class="nav-item" onclick="navigate('Settings')" id="nav-Settings">
+            <span class="nav-icon"><i class="fa-solid fa-gear"></i></span>
+            <span>Settings</span>
+          </button>
+        </nav>
+      </div>
+
+      <div class="sidebar-bottom">
+        <div class="sync-status">
+          <span class="status-dot"></span>
+          <span><b>All data synced</b><br>Local SQLite WAL Engine</span>
+        </div>
+
+        <div class="profile-card">
+          <div class="avatar">AR</div>
+          <div class="profile-info">
+            <b>Ananya Rao</b>
+            <small>Personal Workspace</small>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Shell -->
+    <main class="main-wrapper">
+      
+      <!-- Topbar Header -->
+      <header class="topbar">
+        <div class="breadcrumbs">
+          <button class="icon-btn d-md-none" onclick="toggleSidebar()" style="display:none;" id="mobile-toggle">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <span>Workspace</span>
+          <i class="fa-solid fa-chevron-right" style="font-size: 10px;"></i>
+          <b id="current-crumb">Overview</b>
+        </div>
+
+        <div class="top-actions">
+          <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass" style="color: var(--text-dim); font-size: 12px;"></i>
+            <input type="text" id="global-search" placeholder="Search transactions, rules, insights…" oninput="handleGlobalSearch(this.value)" />
+          </div>
+
+          <select class="period-select" id="date-range-filter" onchange="handlePeriodChange(this.value)">
+            <option value="This month">This month (Oct 2026)</option>
+            <option value="Last 30 days">Last 30 days</option>
+            <option value="All">All Time (Jan - Oct 2026)</option>
+          </select>
+
+          <div class="connection-pill" title="Transparent Connection Status">
+            <span class="pulse"></span>
+            <span>5 / 5 Sources Active</span>
+          </div>
+
+          <button class="icon-btn" onclick="toggleNotifications()" id="notif-btn">
+            <i class="fa-regular fa-bell"></i>
+            <span class="notif-badge" id="notif-counter">0</span>
+          </button>
+
+          <button class="btn-primary" onclick="openAddTransactionModal()">
+            <i class="fa-solid fa-plus"></i> Add Transaction
+          </button>
+
+          <div class="avatar" style="width: 32px; height: 32px; font-size: 11px;">AR</div>
+        </div>
+
+        <!-- Notifications Popover Drawer -->
+        <div class="notif-drawer" id="notif-drawer">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid var(--border-line); padding-bottom:8px;">
+            <b style="font-size:13px; color:#fff;">Notifications & Alerts</b>
+            <small style="color:var(--text-dim); cursor:pointer;" onclick="toggleNotifications()">Close</small>
+          </div>
+          <div id="notif-list" style="display:flex; flex-direction:column; gap:8px; max-height:280px; overflow-y:auto;">
+            <!-- Populated via JS -->
+          </div>
+        </div>
+      </header>
+
+      <!-- Dynamic Page Viewport -->
+      <section class="content-area" id="app-content">
+        <!-- Rendered by /static/js/app.js -->
+        <div style="display:flex; justify-content:center; align-items:center; height:50vh; color:var(--text-muted);">
+          <i class="fa-solid fa-circle-notch fa-spin fa-2x"></i>
+          <span style="margin-left:12px;">Loading Money Copilot AI Intelligence OS…</span>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Modal 1: Add/Edit Transaction Modal -->
+  <div class="modal-overlay" id="modal-transaction" style="display:none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Add Transaction</h2>
+        <button class="icon-btn" onclick="closeModal('modal-transaction')"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="form-transaction" onsubmit="submitTransaction(event)">
+        <div class="form-group">
+          <label>Merchant / Receiver</label>
+          <input type="text" id="txn-merchant" placeholder="e.g. Swiggy, Amazon, Uber" required />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Amount (INR ₹)</label>
+            <input type="number" step="0.01" min="1" id="txn-amount" placeholder="e.g. 1500" required />
+          </div>
+          <div class="form-group">
+            <label>Direction</label>
+            <select id="txn-direction">
+              <option value="expense">Expense (Outflow)</option>
+              <option value="income">Income (Inflow)</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Category</label>
+            <select id="txn-category">
+              <option value="Food">Food & Dining</option>
+              <option value="Groceries">Groceries</option>
+              <option value="Shopping">Shopping</option>
+              <option value="Bills">Bills & Utilities</option>
+              <option value="Rent">Rent & Housing</option>
+              <option value="Investments">Investments</option>
+              <option value="Subscriptions">Subscriptions</option>
+              <option value="Travel">Travel & Commute</option>
+              <option value="Healthcare">Healthcare</option>
+              <option value="Salary">Salary</option>
+              <option value="Freelance income">Freelance income</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Payment Source</label>
+            <select id="txn-source">
+              <option value="Google Pay">Google Pay</option>
+              <option value="PhonePe">PhonePe</option>
+              <option value="Paytm">Paytm</option>
+              <option value="BHIM">BHIM</option>
+              <option value="Amazon Pay">Amazon Pay</option>
+              <option value="Bank statement">Bank statement</option>
+              <option value="Card">Credit/Debit Card</option>
+              <option value="Manual entry">Manual entry</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Date and Time</label>
+          <input type="datetime-local" id="txn-date" required />
+        </div>
+        <div class="form-group">
+          <label>Notes / Receipt Memo</label>
+          <input type="text" id="txn-notes" placeholder="Optional notes" />
+        </div>
+        <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px;">
+          <button type="button" class="btn-secondary" onclick="closeModal('modal-transaction')">Cancel</button>
+          <button type="submit" class="btn-primary"><i class="fa-solid fa-check"></i> Save Record</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 2: Explainability Engine Deep-Dive Modal (Section 5) -->
+  <div class="modal-overlay" id="modal-explainability" style="display:none;">
+    <div class="modal-content" style="width:min(700px, 95vw);">
+      <div class="modal-header">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div class="kpi-icon" style="background:rgba(99,102,241,0.2); color:var(--accent-cyan);"><i class="fa-solid fa-brain"></i></div>
+          <div>
+            <span class="eyebrow" style="margin:0;">COGNIFLOW EXPLAINABILITY ENGINE</span>
+            <h2 id="exp-title">Insight Breakdown</h2>
+          </div>
+        </div>
+        <button class="icon-btn" onclick="closeModal('modal-explainability')"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div id="exp-body" style="font-size:12px; line-height:1.7; color:var(--text-main);">
+        <!-- Filled by JS -->
+      </div>
+      <div style="display:flex; justify-content:flex-end; margin-top:24px; border-top:1px solid var(--border-line); padding-top:14px;">
+        <button class="btn-secondary" onclick="closeModal('modal-explainability')">Close Breakdown</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 3: Financial Health Score Factors Modal -->
+  <div class="modal-overlay" id="modal-health" style="display:none;">
+    <div class="modal-content" style="width:min(680px, 95vw);">
+      <div class="modal-header">
+        <div>
+          <span class="eyebrow">DIAGNOSTIC CRITERIA</span>
+          <h2>Financial Health Score Factors (100 Max)</h2>
+        </div>
+        <button class="icon-btn" onclick="closeModal('modal-health')"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div id="health-factors-list" style="display:flex; flex-direction:column; gap:12px;">
+        <!-- Filled by JS -->
+      </div>
+      <div style="margin-top:18px; border-top:1px solid var(--border-line); padding-top:12px; font-size:10.5px; color:var(--text-dim);">
+        <i class="fa-solid fa-shield-halved"></i> <b>Disclaimer:</b> Educational financial health metric for personal decision-support. Not a credit score or financial guarantee.
+      </div>
+    </div>
+  </div>
+
+  <!-- Application Main Logic -->
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
