@@ -473,7 +473,7 @@ async function renderTransactions(container) {
               <span class="badge critical">${dups.length} Suspect Found</span>
             </div>
             <p style="color:var(--text-muted); font-size:11.5px; margin:4px 0 10px;">
-              Detected potential duplicate charge: <b>${dups[0].suspect_transaction.merchant} (₹${dups[0].suspect_transaction.amount:,.0f})</b> occurred within ${Math.round(dups[0].time_delta_seconds / 60)} minutes of a matching record with <b>${Math.round(dups[0].confidence * 100)}% match confidence</b>.
+              Detected potential duplicate charge: <b>${dups[0].suspect_transaction.merchant} (₹${Number(dups[0].suspect_transaction.amount).toLocaleString("en-IN", { maximumFractionDigits: 0 })})</b> occurred within ${Math.round(dups[0].time_delta_seconds / 60)} minutes of a matching record with <b>${Math.round(dups[0].confidence * 100)}% match confidence</b>.
             </p>
             <div style="display:flex; gap:8px;">
               <button class="btn-primary" style="padding:5px 10px; font-size:11px;" onclick="resolveDuplicateAction('${dups[0].suspect_transaction.id}', 'confirm')">
