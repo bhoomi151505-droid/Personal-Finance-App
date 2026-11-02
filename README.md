@@ -1,4 +1,4 @@
-# Money Copilot – AI-Powered Personal Financial Intelligence Platform
+# Cogni Wealth – AI-Powered Personal Financial Intelligence Platform
 
 > **Inspired by Cogniflow AI Analytics & Explainability Engine**  
 > An enterprise-grade, intelligent financial decision-support and personal money management platform.
@@ -7,7 +7,7 @@
 
 ## 1. Executive Summary & Architecture Overview
 
-**Money Copilot** upgrades traditional personal finance tools into an explainable, context-aware intelligence operating system. Built upon actual database records and deterministic mathematical engines, it ensures **zero fabricated AI reasoning**, complete transparency across connected payment channels, and multi-horizon simulation capabilities.
+**Cogni Wealth** upgrades traditional personal finance tools into an explainable, context-aware intelligence operating system. Built upon actual database records and deterministic mathematical engines, it ensures **zero fabricated AI reasoning**, complete transparency across connected payment channels, and multi-horizon simulation capabilities.
 
 ### Key Architectural Pillars:
 * **Backend Core**: High-performance Python FastAPI service with ACID-compliant SQLite WAL persistence (`backend/money_copilot.db`).
